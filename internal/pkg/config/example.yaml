@@ -1,0 +1,16 @@
+jobs:
+- substitutions:
+  - type: string
+    find: foo
+    replace: bar
+  - type: regex
+    find: "(a)(b)(c)"
+    replace: "$3$2$1"
+  mappings:
+  - source:
+      type: http
+      url: https://example.com/file.txt
+    destination:
+      type: gcsBucketObject
+      bucket_name: example-bucket-name
+      object_name: file.txt
