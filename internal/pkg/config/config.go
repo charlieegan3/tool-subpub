@@ -138,23 +138,17 @@ func loadDestination(rawData map[string]interface{}, mapping *Mapping) (err erro
 		return fmt.Errorf("non string value for destinationType.type: %#v", rawData)
 	}
 
-	if destinationType != "gcsBucketObject" {
+	if destinationType != "BucketObject" {
 		return fmt.Errorf("source.type %s is not supported", destinationType)
 	}
 
-	bucketName, ok := rawData["bucket_name"].(string)
+	path, ok := rawData["path"].(string)
 	if !ok {
 		return fmt.Errorf("non string value for destination.bucket_name: %#v", rawData)
 	}
 
-	objectName, ok := rawData["object_name"].(string)
-	if !ok {
-		return fmt.Errorf("non string value for destination.object_name: %#v", rawData)
-	}
-
-	mapping.Destination = &destinations.DestinationGCSBucketObject{
-		BucketName: bucketName,
-		ObjectName: objectName,
+	mapping.Destination = &destinations.DestinationBucketObject{
+		Path: path,
 	}
 
 	return nil

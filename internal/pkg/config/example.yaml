@@ -11,6 +11,5 @@ jobs:
       type: http
       url: https://example.com/file.txt
     destination:
-      type: gcsBucketObject
-      bucket_name: example-bucket-name
-      object_name: file.txt
+      type: BucketObject
+      path: gs://example-bucket-name/file.txt

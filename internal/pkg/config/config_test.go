@@ -26,9 +26,8 @@ func TestLoadConfig(t *testing.T) {
 						Source: &sources.SourceHTTP{
 							URL: "https://example.com/file.txt",
 						},
-						Destination: &destinations.DestinationGCSBucketObject{
-							BucketName: "example-bucket-name",
-							ObjectName: "file.txt",
+						Destination: &destinations.DestinationBucketObject{
+							Path: "gs://example-bucket-name/file.txt",
 						},
 					},
 				},
