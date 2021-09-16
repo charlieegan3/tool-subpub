@@ -6,23 +6,14 @@ import (
 	"regexp"
 
 	"github.com/charlieegan3/subpub/internal/pkg/destinations"
+	"github.com/charlieegan3/subpub/internal/pkg/jobs"
 	"github.com/charlieegan3/subpub/internal/pkg/sources"
 	"github.com/charlieegan3/subpub/internal/pkg/sub"
 	"gopkg.in/yaml.v3"
 )
 
 type Config struct {
-	Jobs []Job
-}
-
-type Job struct {
-	Mappings      []Mapping
-	Substitutions []sub.Substitution
-}
-
-type Mapping struct {
-	Source      sources.Source
-	Destination destinations.Destination
+	Jobs []jobs.Job
 }
 
 func Load(configFilePath string) (cfg Config, err error) {
@@ -46,18 +37,18 @@ func Load(configFilePath string) (cfg Config, err error) {
 }
 
 func loadJobs(rawData map[string]interface{}, cfg *Config) (err error) {
-	jobs, ok := rawData["jobs"].([]interface{})
+	configJobs, ok := rawData["jobs"].([]interface{})
 	if !ok {
 		return fmt.Errorf("cannot unmarshal jobs to []interface{}: %#v", rawData)
 	}
 
-	for _, j := range jobs {
+	for _, j := range configJobs {
 		rawJob, ok := j.(map[string]interface{})
 		if !ok {
 			return fmt.Errorf("cannot unmarshal job to map[string]interface{}: %#v", rawData)
 		}
 
-		var job Job
+		var job jobs.Job
 
 		err = loadSubstitutions(rawJob, &job)
 		if err != nil {
@@ -74,7 +65,7 @@ func loadJobs(rawData map[string]interface{}, cfg *Config) (err error) {
 	return nil
 }
 
-func loadMappings(rawData map[string]interface{}, job *Job) (err error) {
+func loadMappings(rawData map[string]interface{}, job *jobs.Job) (err error) {
 	rawMappings, ok := rawData["mappings"].([]interface{})
 	if !ok {
 		return fmt.Errorf("cannot unmarshal mappings to []interface{}: %#v", rawData)
@@ -96,7 +87,7 @@ func loadMappings(rawData map[string]interface{}, job *Job) (err error) {
 			return fmt.Errorf("invalid or missing value for mapping.destination: %#v", rawMapping)
 		}
 
-		var mapping Mapping
+		var mapping jobs.Mapping
 		err = loadSource(source, &mapping)
 		if err != nil {
 			return fmt.Errorf("failed to load mapping source: %s", err)
@@ -112,7 +103,7 @@ func loadMappings(rawData map[string]interface{}, job *Job) (err error) {
 	return nil
 }
 
-func loadSource(rawData map[string]interface{}, mapping *Mapping) (err error) {
+func loadSource(rawData map[string]interface{}, mapping *jobs.Mapping) (err error) {
 	sourceType, ok := rawData["type"].(string)
 	if !ok {
 		return fmt.Errorf("non string value for source.type: %#v", rawData)
@@ -132,7 +123,7 @@ func loadSource(rawData map[string]interface{}, mapping *Mapping) (err error) {
 	return nil
 }
 
-func loadDestination(rawData map[string]interface{}, mapping *Mapping) (err error) {
+func loadDestination(rawData map[string]interface{}, mapping *jobs.Mapping) (err error) {
 	destinationType, ok := rawData["type"].(string)
 	if !ok {
 		return fmt.Errorf("non string value for destinationType.type: %#v", rawData)
@@ -154,7 +145,7 @@ func loadDestination(rawData map[string]interface{}, mapping *Mapping) (err erro
 	return nil
 }
 
-func loadSubstitutions(rawData map[string]interface{}, job *Job) (err error) {
+func loadSubstitutions(rawData map[string]interface{}, job *jobs.Job) (err error) {
 	subs, ok := rawData["substitutions"].([]interface{})
 	if !ok {
 		return fmt.Errorf("cannot unmarshal substitutions to []interface{}: %#v", rawData)

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/charlieegan3/subpub/internal/pkg/destinations"
+	"github.com/charlieegan3/subpub/internal/pkg/jobs"
 	"github.com/charlieegan3/subpub/internal/pkg/sources"
 	"github.com/charlieegan3/subpub/internal/pkg/sub"
 	"github.com/maxatome/go-testdeep/td"
@@ -19,9 +20,9 @@ func TestLoadConfig(t *testing.T) {
 	}
 
 	expectedConfig := Config{
-		Jobs: []Job{
+		Jobs: []jobs.Job{
 			{
-				Mappings: []Mapping{
+				Mappings: []jobs.Mapping{
 					{
 						Source: &sources.SourceHTTP{
 							URL: "https://example.com/file.txt",
