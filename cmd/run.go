@@ -24,7 +24,10 @@ var runCmd = &cobra.Command{
 		}
 
 		for _, j := range cfg.Jobs {
-			jobs.Run(&j)
+			err = jobs.Run(&j)
+			if err != nil {
+				log.Fatalf("failed to run job: %s", err)
+			}
 		}
 	},
 }
