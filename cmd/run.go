@@ -3,8 +3,8 @@ package cmd
 import (
 	"log"
 
-	"github.com/charlieegan3/subpub/internal/pkg/config"
-	"github.com/charlieegan3/subpub/internal/pkg/jobs"
+	"github.com/charlieegan3/tool-subpub/internal/pkg/config"
+	"github.com/charlieegan3/tool-subpub/internal/pkg/jobs"
 	"github.com/spf13/cobra"
 )
 

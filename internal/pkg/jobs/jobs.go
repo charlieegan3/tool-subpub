@@ -3,9 +3,9 @@ package jobs
 import (
 	"fmt"
 
-	"github.com/charlieegan3/subpub/internal/pkg/destinations"
-	"github.com/charlieegan3/subpub/internal/pkg/sources"
-	"github.com/charlieegan3/subpub/internal/pkg/sub"
+	"github.com/charlieegan3/tool-subpub/internal/pkg/destinations"
+	"github.com/charlieegan3/tool-subpub/internal/pkg/sources"
+	"github.com/charlieegan3/tool-subpub/internal/pkg/sub"
 )
 
 type Job struct {
