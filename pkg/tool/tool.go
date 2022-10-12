@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/charlieegan3/tool-subpub/internal/pkg/sub"
-	"github.com/charlieegan3/tool-subpub/pkg/api"
-
 	"github.com/Jeffail/gabs/v2"
-	"github.com/charlieegan3/tool-subpub/pkg/tool/handlers"
 	"github.com/charlieegan3/toolbelt/pkg/apis"
 	"github.com/gorilla/mux"
+
+	"github.com/charlieegan3/tool-subpub/internal/pkg/sub"
+	"github.com/charlieegan3/tool-subpub/pkg/api"
+	"github.com/charlieegan3/tool-subpub/pkg/tool/handlers"
 )
 
 // SubPub is a tool for substituting text in http accessible content and publishing it
@@ -135,3 +135,4 @@ func (d *SubPub) HTTPAttach(router *mux.Router) error {
 func (d *SubPub) Jobs() ([]apis.Job, error) {
 	return []apis.Job{}, nil
 }
+func (d *SubPub) ExternalJobsFuncSet(f func(job apis.ExternalJob) error) {}
