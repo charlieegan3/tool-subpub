@@ -34,6 +34,7 @@ func (d *SubPub) FeatureSet() apis.FeatureSet {
 func (d *SubPub) HTTPPath() string {
 	return "subpub"
 }
+func (d *SubPub) HTTPHost() string { return "" }
 
 func (d *SubPub) SetConfig(config map[string]any) error {
 	d.targets = make(map[string]api.Target)
